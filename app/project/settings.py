@@ -29,6 +29,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # my app
+    'cities.apps.CitiesConfig',
 ]
 
 MIDDLEWARE = [
@@ -94,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -111,7 +114,7 @@ STATIC_URL = os.getenv('STATIC_URL')
 
 if DEBUG:
     STATICFILES_DIRS = (
-            BASE_DIR / os.getenv('STATIC_ROOT'),
+        BASE_DIR / os.getenv('STATIC_ROOT'),
     )
 else:
     STATIC_ROOT = BASE_DIR / os.getenv('STATIC_ROOT')

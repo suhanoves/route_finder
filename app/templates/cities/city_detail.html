@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ city.name }}{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>Страница города</h1>
+            <p>Название: {{ city.name }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a class='btn btn-outline-dark' href="{% url 'cities:cities' %}">🢠 К списку городов</a>
+        </div>
+    </div>
+{% endblock content %}
