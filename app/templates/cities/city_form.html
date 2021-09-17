@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if not city %}
+        Создание города
+    {% else %}
+        Редактирование города {{ city.name }}
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+
+            {% if not city %}
+                <h1>Создание города:</h1>
+            {% else %}
+                <h1>Редактирование города {{ city.name }}:</h1>
+            {% endif %}
+
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">
+                    {% if not city %}
+                        Создать город
+                    {% else %}
+                        Сохранить изменения
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
