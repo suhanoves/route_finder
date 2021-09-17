@@ -1,3 +1,16 @@
-from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
-# Create your views here.
+from cities.models import City
+
+__all__ = (
+    'CitiesListView',
+    'CityDetailView'
+)
+
+
+class CitiesListView(ListView):
+    model = City
+
+
+class CityDetailView(DetailView):
+    model = City
