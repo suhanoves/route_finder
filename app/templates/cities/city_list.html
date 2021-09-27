@@ -1,15 +1,51 @@
 {% extends 'base.html' %}
+{% load bootstrap_tags %}
 {% block title %}Список городов{% endblock title %}
 
 {% block content %}
-    <h1>Список городов</h1>
+    <div class="row my-3">
+        <div class="col d-flex align-items-center">
+            <h1 class="d-inline-block mb-0">Города:</h1>
+            <a class="btn btn-outline-primary ms-auto" href="{% url 'cities:city_create' %}">
+                <i class="bi bi-building"></i>
+                <span class="">Добавить</span>
+                <span class="d-none d-sm-inline"> город</span>
+            </a>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col">
-            <ul>
-                {% for city in city_list %}
-                    <li><a href="{{ city.get_absolute_url }}">{{ city.name }}</a></li>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert d-flex align-items-center alert-dismissible fade show alert-{{ message.extra_tags }}"
+                         role="alert">
+                        <div class="me-2">{% message_icon message.extra_tags %}</div>
+                        <div>{{ message }}</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 {% endfor %}
-            </ul>
+            {% endif %}
+
+            <table class="table table-striped">
+                <tbody>
+                    {% for city in city_list %}
+                        <tr>
+                            <td>
+                                <a href="{{ city.get_absolute_url }}">{{ city.name }}</a>
+                            </td>
+                            <td class="text-end">
+                                <a class='text-dark d--inline-flex mx-2'
+                                   href="{% url 'cities:city_update' pk=city.pk %}"><i
+                                        class="bi bi-pencil"></i></a>
+                                <a class='text-danger d-inline-flex mx-2'
+                                   href="{% url 'cities:city_delete' pk=city.pk %}"><i
+                                        class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock content %}
