@@ -4,13 +4,29 @@
 {% block content %}
     <div class="row">
         <div class="col">
-            <h1>Страница города</h1>
-            <p>Название: {{ city.name }}</p>
+            <h1>Страница города {{ city.name }}</h1>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <a class='btn btn-outline-dark' href="{% url 'cities:cities' %}">🢠 К списку городов</a>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{% if message.tags %}{{ message.tags }}"{% endif %} role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <a class='btn btn-outline-dark' href="{% url 'cities:cities' %}">⇦ К списку городов</a>
+            <a class='btn btn-outline-primary' href="{% url 'cities:city_update' pk=city.pk %}"><i
+                    class="bi bi-pencil"></i> Редактировать</a>
+            <a class='btn btn-outline-danger' href="{% url 'cities:city_delete' pk=city.pk %}"><i
+                    class="bi bi-trash"></i> Удалить</a>
         </div>
     </div>
 {% endblock content %}
