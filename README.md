@@ -6,8 +6,8 @@
 
 ## Содержание:
 
-- [Условные обозначения](#legend)
 - [Цели](#goals)
+- [Условные обозначения](#legend)
 - [Прогресс выполнения](#progress)
 - [Итоги проекта](#features)
 
@@ -32,4 +32,9 @@
 * :asterisk: &mdash; имеются комментарии
 
 ## Прогресс выполнения: <a name="progress"/>
+
+* :heavy_check_mark: Приложения Города, CRUD для модели
+* :heavy_check_mark: Кастомный тэг для подсвечивания активной страницы в header
+* :heavy_check_mark: DjangoMessages при CrUD операциях
+* :heavy_check_mark: Кастомный тэг для подстановки иконки в bootstrap alerts
 
