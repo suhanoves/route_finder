@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # my app
     'cities.apps.CitiesConfig',
     'flights.apps.FlightsConfig',
+    'routes.apps.RoutesConfig',
 ]
 
 MIDDLEWARE = [
