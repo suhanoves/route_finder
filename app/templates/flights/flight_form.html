@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if not flight %}
+        Создание рейса
+    {% else %}
+        Редактирование рейса {{ flight }}
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+
+            {% if not flight %}
+                <h1>Создание рейса:</h1>
+            {% else %}
+                <h1>Редактирование рейса {{ flight }}:</h1>
+            {% endif %}
+
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">
+                    {% if not flight %}
+                        Создать рейс
+                    {% else %}
+                        Сохранить изменения
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

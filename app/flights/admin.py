@@ -6,5 +6,5 @@ from flights.models import Flight
 @admin.register(Flight)
 class FlightAdmin(admin.ModelAdmin):
     ordering = ['origin', 'destination']
-    list_display = ['number', 'origin', 'destination', 'duration', ]
+    list_display = ['number', 'origin', 'destination', 'duration', 'price']
     search_fields = ['origin', 'destination']

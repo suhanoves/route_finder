@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load bootstrap_tags %}
+{% block title %}Список городов{% endblock title %}
+
+{% block content %}
+    <div class="row my-3">
+        <div class="col d-flex align-items-center">
+            <h1 class="d-inline-block mb-0">Рейсы</h1>
+            <a class="btn btn-outline-primary ms-auto"
+               href="{% url 'flights:flight_create' %}">
+                <span class="d-inline">✈ </span>
+                <span class="">Добавить</span>
+                <span class="d-none d-sm-inline"> рейс</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert d-flex align-items-center alert-dismissible fade show alert-{{ message.extra_tags }}"
+                         role="alert">
+                        <div class="me-2">{% message_icon message.extra_tags %}</div>
+                        <div>{{ message }}</div>
+                        <button type="button" class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Рейс</th>
+                        <th>Город отправления</th>
+                        <th>Город назначения</th>
+                        <th>Время в пути</th>
+                        <th>Стоимость</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in flight_list %}
+                        <tr>
+                            <td>
+                                <a href="{{ flight.get_absolute_url }}">{{ flight.number }}</a>
+                            </td>
+                            <td>
+                                {{ flight.origin }}
+                            </td>
+                            <td>
+                                {{ flight.destination }}
+                            </td>
+                            <td>
+                                {{ flight.duration }}
+                            </td>
+                            <td>
+                                {{ flight.price }} ₽
+                            </td>
+                            <td class="text-end">
+                                <a class='text-dark d--inline-flex mx-2'
+                                   href="{% url 'flights:flight_update' pk=flight.pk %}"><i
+                                        class="bi bi-pencil"></i></a>
+                                <a class='text-danger d-inline-flex mx-2'
+                                   href="{% url 'flights:flight_delete' pk=flight.pk %}"><i
+                                        class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock content %}

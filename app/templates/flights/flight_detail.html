@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}{{ flight.name }}{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>Рейс {{ flight }}</h1>
+        </div>
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Номер рейса</th>
+                        <th>Город отправления</th>
+                        <th>Город назначения</th>
+                        <th>Время в пути</th>
+                        <th>Стоимость</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ flight.number }}</td>
+                        <td>{{ flight.origin }}</td>
+                        <td>{{ flight.destination }}</td>
+                        <td>{{ flight.duration }}</td>
+                        <td>{{ flight.price }} ₽</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-
+                            {% if message.tags %}{{ message.tags }}"{% endif %}
+                         role="alert">
+                        <i class="bi bi-check-circle-fill me-2"></i> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <a class='btn btn-outline-dark' href="{% url 'flights:flights' %}">⇦
+                                                                               К
+                                                                               списку
+                                                                               рейсов</a>
+            <a class='btn btn-outline-primary'
+               href="{% url 'flights:flight_update' pk=flight.pk %}"><i
+                    class="bi bi-pencil"></i> Редактировать</a>
+            <a class='btn btn-outline-danger'
+               href="{% url 'flights:flight_delete' pk=flight.pk %}"><i
+                    class="bi bi-trash"></i> Удалить</a>
+        </div>
+    </div>
+{% endblock content %}
