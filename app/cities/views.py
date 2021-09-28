@@ -1,7 +1,8 @@
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView
+from django.views.generic import View, ListView, DetailView, CreateView, \
+    DeleteView, UpdateView
 
 from cities.models import City
 
@@ -22,14 +23,17 @@ class CityDetailView(DetailView):
     model = City
 
 
-class CityFormView(SuccessMessageMixin):
+class CityFormView(SuccessMessageMixin, View):
     model = City
     fields = ['name']
     success_url = reverse_lazy('cities:cities')
 
     def get_success_message(self, cleaned_data):
         success_message = super().get_success_message(cleaned_data)
-        return messages.success(self.request, success_message, extra_tags='success')
+        return messages.success(self.request,
+                                success_message,
+                                extra_tags='success'
+                                )
 
 
 class CityCreateView(CityFormView, CreateView):
@@ -50,5 +54,7 @@ class CityDeleteView(SuccessMessageMixin, DeleteView):
 
     def delete(self, request, *args, **kwargs):
         obj = self.get_object()
-        messages.success(self.request, self.success_message % obj.__dict__, extra_tags='danger')
+        messages.success(self.request,
+                         self.success_message % obj.__dict__,
+                         extra_tags='danger')
         return super().delete(request, *args, **kwargs)
