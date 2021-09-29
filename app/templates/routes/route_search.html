@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Поиск маршрутов
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            {% crispy form  %}
+        </div>
+    </div>
+{% endblock content %}
