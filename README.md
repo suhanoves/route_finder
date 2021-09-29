@@ -1,8 +1,8 @@
 ✈ RouteFinder
 ======
 
-Данный репозиторий создан для отработки практического применения алгоритма
-Дейкстры на примере авиасообщения между городами РФ.
+Данный репозиторий создан для отработки практического применения алгоритма Дейкстры на примере авиасообщения между
+городами РФ.
 
 ## Содержание:
 
@@ -38,6 +38,9 @@
 * :heavy_check_mark: DjangoMessages при CrUD операциях
 * :heavy_check_mark: Кастомный тэг для подстановки иконки в bootstrap alerts
 * :heavy_check_mark: Приложения Рейсы (flights), CRUD для модели Flight
-* :heavy_check_mark: Добавление constraints и метода clean() к модели Flight (:asterisk:
-  последний будет впоследствии изменён на Django signals_)
-
+* :heavy_check_mark: Добавление constraints и метода clean() к модели Flight (:asterisk: последний будет впоследствии
+  изменён на Django signals_)
+* :heavy_check_mark: Создано приложение Маршруты (routes), добавлена форма поиска маршрута
+* :heavy_check_mark: Подключены crispy-forms для удобной визуализации форм в стиле bootstrap
+* :heavy_check_mark: Создана форма поиска маршрутов с учётом промежуточных городов
+* :heavy_check_mark: Подключена JQuery библиотека select2 для удобных полей поиска select и multiply select
