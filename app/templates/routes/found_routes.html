@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap_tags %}
+
+{% block title %}Список маршрутов{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert d-flex align-items-center alert-dismissible fade show alert-{{ message.extra_tags }}"
+                         role="alert">
+                        <div class="me-2">{% message_icon message.extra_tags %}</div>
+                        <div>{{ message }}</div>
+                        <button type="button" class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% crispy form %}
+        </div>
+    </div>
+{% endblock content %}
