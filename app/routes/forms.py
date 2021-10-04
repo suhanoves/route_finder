@@ -60,8 +60,18 @@ class RouteSearchForm(forms.Form):
                   css_class='js-multiple-choice',
                   wrapper_class='col-12'
                   ),
-            ButtonHolder(
-                Submit('find_routes', 'Найти маршруты',
-                       css_class='button white')
-            )
+            Div(
+                Field('price_limit',
+                      wrapper_class='col-12 col-sm-6'
+                      ),
+                Field('duration_limit',
+                      wrapper_class='col-12 col-sm-6'
+                      ),
+                css_class='row'
+            ),
+            Div(
+                ButtonHolder(
+                    Submit('submit', 'Найти маршруты', )),
+                css_class='row text-center'
+            ),
         )
