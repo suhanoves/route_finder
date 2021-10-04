@@ -4,6 +4,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, ButtonHolder, Field, \
     Div
 from django import forms
+from django.core.exceptions import ValidationError
 
 from cities.models import City
 
@@ -75,3 +76,10 @@ class RouteSearchForm(forms.Form):
                 css_class='row text-center'
             ),
         )
+
+    def clean(self):
+        if self.cleaned_data['origin'] == self.cleaned_data['destination']:
+            raise ValidationError(
+                'Город отправления и город назначения должны отличаться',
+                code='origin_is_destination'
+            )
