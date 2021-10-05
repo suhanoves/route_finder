@@ -22,8 +22,21 @@
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="col-xs-12 col-sm-2">
             {% crispy form %}
         </div>
+        <div class="col-xs-12 col-sm-10">
+            <h1>Маршруты из {{ form.cleaned_data.origin }} в {{ form.cleaned_data.destination }}</h1>
+            {% if form.cleaned_data.transfers %}
+                <h2>через
+                    {% for city in form.cleaned_data.transfers %}
+                        {{ city }}&nbsp;
+                    {% endfor %}
+                </h2>
+            {% endif %}
+
+            {% include 'routes/routes_with_flights_list.html' with routes=routes %}
+        </div>
     </div>
+
 {% endblock content %}

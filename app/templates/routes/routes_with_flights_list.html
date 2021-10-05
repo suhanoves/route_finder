@@ -1,0 +1,33 @@
+{% for route in routes %}
+    <div class="card border-primary mb-3">
+        <div class="card-header">
+            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    {% for city in route.waypoints %}
+                        <li class="breadcrumb-item">{{ city }}</li>
+                    {% endfor %}
+                    {{ route.price }}
+                    {{ route.duration }}
+                </ol>
+            </nav>
+        </div>
+        <div class="card-body text-secondary">
+            <h5 class="card-title">Рейсы:</h5>
+            {% for flight in route.flights %}
+                <div class="card border-secondary mb-1">
+                    <div class="card-body text-secondary">
+                        <p class="card-text">{{ flight.origin }} &mdash; {{ flight.destination }} Время в
+                                                                 пути: {{ flight.duration }}
+                                                                 Стоимость: {{ flight.price }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="card-body text-secondary">
+        <div class="card-body text-secondary">
+            <p class="card-text">По вашему запросу маршрутов не найдено, попробуйте изменить параметры запроса</p>
+        </div>
+    </div>
+{% endfor %}
