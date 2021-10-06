@@ -80,7 +80,7 @@ def apply_duration_filter(routes, duration_limit: timedelta):
     filtered_routes = routes
     if duration_limit:
         filtered_routes = filter(
-            lambda route: route.duration < duration_limit,
+            lambda route: route.duration <= duration_limit,
             routes
         )
     return filtered_routes
@@ -90,13 +90,13 @@ def apply_price_filter(routes, price_limit: Decimal):
     filtered_routes = routes
     if price_limit:
         filtered_routes = filter(
-            lambda route: route.price < price_limit,
+            lambda route: route.price <= price_limit,
             routes
         )
     return filtered_routes
 
 
-def route_finder(form: RouteSearchForm) -> Dict[str, list]:
+def route_finder(form: RouteSearchForm) -> List[FoundRoute]:
     origin = form.cleaned_data['origin']
     destination = form.cleaned_data['destination']
     transfers = form.cleaned_data['transfers']
@@ -113,5 +113,6 @@ def route_finder(form: RouteSearchForm) -> Dict[str, list]:
     routes = apply_price_filter(routes, price_limit)
 
     routes = list(routes)
+    routes.sort(key=lambda route: route.duration)
 
     return routes
