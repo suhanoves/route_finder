@@ -48,7 +48,6 @@ class RouteSearchForm(forms.Form):
 
         self.helper.layout = Layout(
             Div(
-                'Поиск маршрута',
                 Field('origin',
                       css_class='js-single-choice',
                       wrapper_class='col-12'
