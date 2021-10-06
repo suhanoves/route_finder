@@ -1,33 +1,51 @@
 {% for route in routes %}
-    <div class="card border-primary mb-3">
+    <div class="card border-dark mb-3">
         <div class="card-header">
-            <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    {% for city in route.waypoints %}
-                        <li class="breadcrumb-item">{{ city }}</li>
-                    {% endfor %}
-                    {{ route.price }}
-                    {{ route.duration }}
-                </ol>
-            </nav>
-        </div>
-        <div class="card-body text-secondary">
-            <h5 class="card-title">Рейсы:</h5>
-            {% for flight in route.flights %}
-                <div class="card border-secondary mb-1">
-                    <div class="card-body text-secondary">
-                        <p class="card-text">{{ flight.origin }} &mdash; {{ flight.destination }} Время в
-                                                                 пути: {{ flight.duration }}
-                                                                 Стоимость: {{ flight.price }}</p>
+            <div class="row">
+                <div class="col-9">
+                    Количество пересадок: {{ route.flights|length|add:-1 }}
+                    <div style="--bs-breadcrumb-divider: '>';">
+                        <ol class="breadcrumb mb-0">
+                            {% for city in route.waypoints %}
+                                <li class="breadcrumb-item fs-4">{{ city }}</li>
+                            {% endfor %}
+                        </ol>
                     </div>
                 </div>
-            {% endfor %}
+                <div class="col-3 text-end">
+                    <p class="mb-2"> {{ route.duration }} <i class="bi bi-clock-history px-1"></i></p>
+                    <p class="mb-0"> {{ route.price }} ₽ <i class="bi bi-wallet2 px-1"></i></p>
+                </div>
+            </div>
         </div>
-    </div>
-    {% empty %}
-    <div class="card-body text-secondary">
+            <div class="card-body">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Рейс</th>
+                            <th scope="col" class="text-end">Время в пути</th>
+                            <th scope="col" class="text-end">Стоимость</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for flight in route.flights %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ flight.origin }} &mdash; {{ flight.destination }}</td>
+                                <td class="text-end">{{ flight.duration }}</td>
+                                <td class="text-end">{{ flight.price }} ₽</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% empty %}
         <div class="card-body text-secondary">
-            <p class="card-text">По вашему запросу маршрутов не найдено, попробуйте изменить параметры запроса</p>
+            <div class="card-body text-secondary">
+                <p class="card-text">По вашему запросу маршрутов не найдено, попробуйте изменить параметры запроса</p>
+            </div>
         </div>
-    </div>
 {% endfor %}
