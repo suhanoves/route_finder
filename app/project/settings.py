@@ -33,6 +33,11 @@ INSTALLED_APPS = [
     # my app
     'cities.apps.CitiesConfig',
     'flights.apps.FlightsConfig',
+    'routes.apps.RoutesConfig',
+
+    # third-party apps
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -128,3 +133,8 @@ MEDIA_ROOT = BASE_DIR / os.getenv('MEDIA_ROOT')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# crispy-forms settings
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap_tags %}
+
+{% block title %}Список маршрутов{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert d-flex align-items-center alert-dismissible fade show alert-{{ message.extra_tags }}"
+                         role="alert">
+                        <div class="me-2">{% message_icon message.extra_tags %}</div>
+                        <div>{{ message }}</div>
+                        <button type="button" class="btn-close"
+                                data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-4 col-lg-4 col-xl-3 mb-4">
+            {% crispy form %}
+        </div>
+        <div class="col-xs-12 col-md-8 col-lg-8 col-xl-9">
+            <h1>Найденные маршруты из {{ form.cleaned_data.origin }} в {{ form.cleaned_data.destination }}</h1>
+            {% if form.cleaned_data.transfers %}
+                <h2 class="mb-3">через
+                    {% for city in form.cleaned_data.transfers %}
+                       {{ city }}{% if not forloop.last %},{% endif %}
+                    {% endfor %}
+                </h2>
+            {% endif %}
+
+            {% include 'routes/routes_with_flights_list.html' with routes=routes %}
+        </div>
+    </div>
+
+{% endblock content %}
