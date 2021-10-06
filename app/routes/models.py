@@ -13,7 +13,7 @@ class Route(models.Model):
         verbose_name='название маршрута',
     )
     duration = models.DurationField(
-        verbose_name='длительность',
+        verbose_name='время в пути',
     )
     price = models.DecimalField(
         verbose_name='стоимость',

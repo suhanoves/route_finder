@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from crispy_forms.bootstrap import AppendedText
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, ButtonHolder, Field, \
     Div
@@ -21,7 +22,7 @@ class RouteSearchForm(forms.Form):
         queryset=all_cities,
     )
     transfers = forms.ModelMultipleChoiceField(
-        label='Через',
+        label='Через города',
         required=False,
         queryset=all_cities,
     )
@@ -33,7 +34,7 @@ class RouteSearchForm(forms.Form):
         decimal_places=2,
     )
     duration_limit = forms.DurationField(
-        label='Длительность',
+        label='Время в пути',
         required=False,
     )
 
@@ -47,13 +48,14 @@ class RouteSearchForm(forms.Form):
 
         self.helper.layout = Layout(
             Div(
+                'Поиск маршрута',
                 Field('origin',
                       css_class='js-single-choice',
-                      wrapper_class='col-12 col-sm-6'
+                      wrapper_class='col-12'
                       ),
                 Field('destination',
                       css_class='js-single-choice',
-                      wrapper_class='col-12 col-sm-6'
+                      wrapper_class='col-12'
                       ),
                 css_class='row'
             ),
@@ -62,11 +64,13 @@ class RouteSearchForm(forms.Form):
                   wrapper_class='col-12'
                   ),
             Div(
-                Field('price_limit',
-                      wrapper_class='col-12 col-sm-6'
-                      ),
+                AppendedText(
+                    'price_limit',
+                    '₽',
+                    wrapper_class='col-xs-12 col-sm-6'
+                ),
                 Field('duration_limit',
-                      wrapper_class='col-12 col-sm-6'
+                      wrapper_class='col-xs-12 col-sm-6'
                       ),
                 css_class='row'
             ),
