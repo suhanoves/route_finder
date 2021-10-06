@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import FormView, FormMixin
 
 from routes.forms import RouteSearchForm
@@ -18,3 +18,7 @@ class FoundRoutesView(FormView):
         routes = route_finder(form)
         context = {'form': form, 'routes': routes}
         return super().render_to_response(context)
+
+
+class RoutesListView(ListView):
+    pass
