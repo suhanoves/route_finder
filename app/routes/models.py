@@ -54,30 +54,6 @@ class Route(models.Model):
             ),
         )
 
-    def clean(self):
-        # unique flight check
-        similar_flights = Flight.objects.filter(
-            origin=self.origin,
-            destination=self.destination,
-            duration=self.duration,
-            price=self.price,
-        ).exclude(
-            pk=self.pk
-        )
-
-        if similar_flights.exists():
-            raise ValidationError(
-                'Маршрут с такими характеристиками уже сохранён',
-                code='not_unique_route'
-            )
-
-        # origin != destination check
-        if self.origin == self.destination:
-            raise ValidationError(
-                'Город отправления и город назначения должны отличаться',
-                code='cities_equal',
-            )
-
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    {% if not flight %}
+        Сохранение маршрута
+    {% else %}
+        Редактирование маршрута {{ flight }}
+    {% endif %}
+{% endblock title %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+
+            {% if not flight %}
+                <h1>Сохранение маршрута:</h1>
+            {% else %}
+                <h1>Редактирование маршрута {{ flight }}:</h1>
+            {% endif %}
+
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <button type="submit" class="btn btn-primary">
+                    {% if not flight %}
+                        Создать рейс
+                    {% else %}
+                        Сохранить изменения
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

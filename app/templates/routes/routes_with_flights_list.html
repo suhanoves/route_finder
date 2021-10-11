@@ -1,9 +1,14 @@
 {% for route in routes %}
     <div class="card border-dark mb-3">
         <div class="card-header">
+
+            <div class="d-flex justify-content-between mb-2">
+                <span class=""><i class="bi bi-clock-history px-1"></i> {{ route.duration }}</span>
+                <span class=""><i class="bi bi-wallet2 px-1"></i> {{ route.price }} ₽</span>
+                <span>Пересадок: {{ route.flights|length|add:'-1' }}</span>
+            </div>
             <div class="row">
-                <div class="col-9">
-                    Количество пересадок: {{ route.flights|length|add:-1 }}
+                <div class="col-10">
                     <div style="--bs-breadcrumb-divider: '>';">
                         <ol class="breadcrumb mb-0">
                             {% for city in route.waypoints %}
@@ -12,40 +17,50 @@
                         </ol>
                     </div>
                 </div>
-                <div class="col-3 text-end">
-                    <p class="mb-2"> {{ route.duration }} <i class="bi bi-clock-history px-1"></i></p>
-                    <p class="mb-0"> {{ route.price }} ₽ <i class="bi bi-wallet2 px-1"></i></p>
+                <div class="col-2 d-flex justify-content-end align-items-center">
+                    <button form={{ forloop.counter }} type='submit' class="btn btn-sm btn-outline-secondary"
+                            title="Сохранить маршрут">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+                            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
         </div>
-            <div class="card-body">
-                <table class="table table-borderless">
-                    <thead>
+        <div class="card-body">
+            <table class="table table-borderless mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Рейс</th>
+                        <th scope="col" class="text-end">Время</th>
+                        <th scope="col" class="text-end">Стоимость</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for flight in route.flights %}
                         <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Рейс</th>
-                            <th scope="col" class="text-end">Время в пути</th>
-                            <th scope="col" class="text-end">Стоимость</th>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ flight.origin }} &mdash; {{ flight.destination }}</td>
+                            <td class="text-end">{{ flight.duration }}</td>
+                            <td class="text-end">{{ flight.price }} ₽</td>
                         </tr>
-                    </thead>
-                    <tbody>
 
-                        {% for flight in route.flights %}
-                            <tr>
-                                <th scope="row">{{ forloop.counter }}</th>
-                                <td>{{ flight.origin }} &mdash; {{ flight.destination }}</td>
-                                <td class="text-end">{{ flight.duration }}</td>
-                                <td class="text-end">{{ flight.price }} ₽</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-        {% empty %}
+    </div>
+
+
+    {% empty %}
+
+    <div class="card-body text-secondary">
         <div class="card-body text-secondary">
-            <div class="card-body text-secondary">
-                <p class="card-text">По вашему запросу маршрутов не найдено, попробуйте изменить параметры запроса</p>
-            </div>
+            <p class="card-text">По вашему запросу маршрутов не найдено, попробуйте изменить параметры
+                                 запроса</p>
         </div>
+    </div>
 {% endfor %}
