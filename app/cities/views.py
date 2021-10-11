@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views.generic import View, ListView, DetailView, CreateView, \
@@ -37,15 +38,15 @@ class CityFormView(SuccessMessageMixin, View):
                                 )
 
 
-class CityCreateView(CityFormView, CreateView):
+class CityCreateView(LoginRequiredMixin, CityFormView, CreateView):
     success_message = f"Город %(name)s добавлен"
 
 
-class CityUpdateView(CityFormView, UpdateView):
+class CityUpdateView(LoginRequiredMixin, CityFormView, UpdateView):
     success_message = f"Город %(name)s отредактирован успешно"
 
 
-class CityDeleteView(SuccessMessageMixin, DeleteView):
+class CityDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = City
     success_url = reverse_lazy('cities:cities')
     success_message = f"Город %(name)s удалён"

@@ -43,19 +43,18 @@
         </div>
     </div>
 
-
     <div class="row">
         <div class="col">
-            <a class='btn btn-outline-dark' href="{% url 'flights:flights' %}">⇦
-                                                                               К
-                                                                               списку
-                                                                               рейсов</a>
-            <a class='btn btn-outline-primary'
-               href="{% url 'flights:flight_update' pk=flight.pk %}"><i
-                    class="bi bi-pencil"></i> Редактировать</a>
-            <a class='btn btn-outline-danger'
-               href="{% url 'flights:flight_delete' pk=flight.pk %}"><i
-                    class="bi bi-trash"></i> Удалить</a>
+            <a class='btn btn-outline-dark' href="{% url 'flights:flights' %}">⇦ К списку рейсов</a>
+
+            {% if user.is_staff %}
+                <a class='btn btn-outline-primary'
+                   href="{% url 'flights:flight_update' pk=flight.pk %}"><i
+                        class="bi bi-pencil"></i> Редактировать</a>
+                <a class='btn btn-outline-danger'
+                   href="{% url 'flights:flight_delete' pk=flight.pk %}"><i
+                        class="bi bi-trash"></i> Удалить</a>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}
