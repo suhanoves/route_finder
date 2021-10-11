@@ -6,7 +6,7 @@ from typing import List, Dict, Generator, Tuple, Set
 
 from cities.models import City
 from flights.models import Flight
-from routes.forms import RouteSearchForm
+from routes.forms import RouteSearchForm, RouteForm
 
 
 @dataclass
@@ -16,7 +16,8 @@ class FoundRoute:
     all waypoints and flights that are required for this route,
     total duration and cost of the route.
     """
-
+    origin: City = None
+    destination: City = None
     waypoints: List[City] = field(default_factory=list)
     flights: List[Flight] = field(default_factory=list)
     duration: timedelta = timedelta()
@@ -52,10 +53,15 @@ def find_routes_dfs(graph, origin: City, destination: City) -> Generator:
                     duration = sum((flight.duration for flight in flights), timedelta())
                     price = sum(flight.price for flight in flights)
 
-                    yield FoundRoute(waypoints=waypoints,
-                                     flights=flights,
-                                     duration=duration,
-                                     price=price)
+                    yield FoundRoute(
+                        origin=origin,
+                        destination=destination,
+                        waypoints=waypoints,
+                        flights=flights,
+                        duration=duration,
+                        price=price,
+                    )
+
                 else:
                     stack.append(
                         (neighbor,
@@ -96,6 +102,20 @@ def apply_price_filter(routes, price_limit: Decimal):
     return filtered_routes
 
 
+def add_init_form(route: FoundRoute) -> FoundRoute:
+    initial = {
+        'origin': route.origin.id,
+        'destination': route.destination.id,
+        'duration': route.duration,
+        'price': route.price,
+        'flights': [flight.id for flight in route.flights],
+    }
+    form = RouteForm(initial=initial)
+    route.form = form
+
+    return route
+
+
 def route_finder(form: RouteSearchForm) -> List[FoundRoute]:
     origin = form.cleaned_data['origin']
     destination = form.cleaned_data['destination']
@@ -111,6 +131,8 @@ def route_finder(form: RouteSearchForm) -> List[FoundRoute]:
     routes = apply_transfers_filter(routes, transfers)
     routes = apply_duration_filter(routes, duration_limit)
     routes = apply_price_filter(routes, price_limit)
+
+    routes = map(add_init_form, routes)
 
     routes = list(routes)
     routes.sort(key=lambda route: route.duration)

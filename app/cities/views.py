@@ -17,6 +17,7 @@ __all__ = (
 
 class CitiesListView(ListView):
     model = City
+    paginate_by = 12
 
 
 class CityDetailView(DetailView):

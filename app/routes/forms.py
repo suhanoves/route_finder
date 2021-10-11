@@ -8,6 +8,7 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from cities.models import City
+from routes.models import Route
 
 all_cities = City.objects.all()
 
@@ -48,7 +49,6 @@ class RouteSearchForm(forms.Form):
 
         self.helper.layout = Layout(
             Div(
-                'Поиск маршрута',
                 Field('origin',
                       css_class='js-single-choice',
                       wrapper_class='col-12'
@@ -87,3 +87,15 @@ class RouteSearchForm(forms.Form):
                 'Город отправления и город назначения должны отличаться',
                 code='origin_is_destination'
             )
+
+
+class RouteForm(forms.ModelForm):
+    duration = forms.CharField(widget=forms.HiddenInput)
+    price = forms.CharField(widget=forms.HiddenInput)
+    origin = forms.CharField(widget=forms.HiddenInput)
+    destination = forms.CharField(widget=forms.HiddenInput)
+    flights = forms.CharField(widget=forms.MultipleHiddenInput)
+
+    class Meta:
+        model = Route
+        fields = '__all__'

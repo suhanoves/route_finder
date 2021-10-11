@@ -18,10 +18,13 @@ __all__ = (
 
 class FlightsListView(ListView):
     model = Flight
+    queryset = Flight.objects.select_related()
+    paginate_by = 13
 
 
 class FlightDetailView(DetailView):
     model = Flight
+    queryset = Flight.objects.select_related()
 
 
 class FlightFormView(SuccessMessageMixin, View):

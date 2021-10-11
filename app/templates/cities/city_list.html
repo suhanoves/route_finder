@@ -48,4 +48,8 @@
             </table>
         </div>
     </div>
+
+    {% if page_obj %}
+        {% include 'paginator.html' %}
+    {% endif %}
 {% endblock content %}
