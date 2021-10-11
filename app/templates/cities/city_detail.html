@@ -23,10 +23,14 @@
     <div class="row">
         <div class="col">
             <a class='btn btn-outline-dark' href="{% url 'cities:cities' %}">⇦ К списку городов</a>
-            <a class='btn btn-outline-primary' href="{% url 'cities:city_update' pk=city.pk %}"><i
-                    class="bi bi-pencil"></i> Редактировать</a>
-            <a class='btn btn-outline-danger' href="{% url 'cities:city_delete' pk=city.pk %}"><i
-                    class="bi bi-trash"></i> Удалить</a>
+
+            {% if user.is_staff %}
+                <a class='btn btn-outline-primary' href="{% url 'cities:city_update' pk=city.pk %}"><i
+                        class="bi bi-pencil"></i> Редактировать</a>
+                <a class='btn btn-outline-danger' href="{% url 'cities:city_delete' pk=city.pk %}"><i
+                        class="bi bi-trash"></i> Удалить</a>
+            {% endif %}
+
         </div>
     </div>
 {% endblock content %}

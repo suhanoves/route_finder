@@ -6,11 +6,15 @@
     <div class="row my-3">
         <div class="col d-flex align-items-center">
             <h1 class="d-inline-block mb-0">Города</h1>
-            <a class="btn btn-outline-primary ms-auto" href="{% url 'cities:city_create' %}">
-                <i class="bi bi-building"></i>
-                <span class="">Добавить</span>
-                <span class="d-none d-sm-inline"> город</span>
-            </a>
+
+            {% if user.is_staff %}
+                <a class="btn btn-outline-primary ms-auto" href="{% url 'cities:city_create' %}">
+                    <i class="bi bi-building"></i>
+                    <span class="">Добавить</span>
+                    <span class="d-none d-sm-inline"> город</span>
+                </a>
+            {% endif %}
+
         </div>
     </div>
 
@@ -34,14 +38,18 @@
                             <td>
                                 <a href="{{ city.get_absolute_url }}">{{ city.name }}</a>
                             </td>
-                            <td class="text-end">
-                                <a class='text-dark d--inline-flex mx-2'
-                                   href="{% url 'cities:city_update' pk=city.pk %}"><i
-                                        class="bi bi-pencil"></i></a>
-                                <a class='text-danger d-inline-flex mx-2'
-                                   href="{% url 'cities:city_delete' pk=city.pk %}"><i
-                                        class="bi bi-trash"></i></a>
-                            </td>
+
+                            {% if user.is_staff %}
+                                <td class="text-end">
+                                    <a class='text-dark d--inline-flex mx-2'
+                                       href="{% url 'cities:city_update' pk=city.pk %}"><i
+                                            class="bi bi-pencil"></i></a>
+                                    <a class='text-danger d-inline-flex mx-2'
+                                       href="{% url 'cities:city_delete' pk=city.pk %}"><i
+                                            class="bi bi-trash"></i></a>
+                                </td>
+                            {% endif %}
+
                         </tr>
                     {% endfor %}
                 </tbody>
