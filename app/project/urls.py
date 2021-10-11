@@ -8,6 +8,7 @@ urlpatterns = [
     path('', include('routes.urls')),
     path('cities/', include('cities.urls')),
     path('flights/', include('flights.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
 
     # Django urls
     path('admin/', admin.site.urls),
