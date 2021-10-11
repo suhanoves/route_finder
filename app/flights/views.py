@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.views import View
@@ -44,16 +45,16 @@ class FlightFormView(SuccessMessageMixin, View):
                                 extra_tags='success')
 
 
-class FlightCreateView(FlightFormView, CreateView):
+class FlightCreateView(LoginRequiredMixin, FlightFormView, CreateView):
     success_message = f"Рейс %(origin)s — %(destination)s добавлен"
 
 
-class FlightUpdateView(FlightFormView, UpdateView):
+class FlightUpdateView(LoginRequiredMixin, FlightFormView, UpdateView):
     success_message = (f"Рейс %(origin)s — %(destination)s "
                        f"отредактирован успешно")
 
 
-class FlightDeleteView(SuccessMessageMixin, DeleteView):
+class FlightDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Flight
     success_url = reverse_lazy('flights:flights')
     success_message = f"Рейс %(origin)s — %(destination)s удалён"
