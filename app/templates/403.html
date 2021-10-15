@@ -2,13 +2,11 @@
 {% block title %}Error 403{% endblock title %}
 
 {% block content %}
-    <div class="row">
-        <div class="col">
+    <div class="row text-center">
+        <div class="col-12">
             <h1>403 Forbidden</h1>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
+        <div class="col-12">
             <p>Для просмотра этого материала требуются специальные права</p>
             <p>Попробуйте войти на сайт под пользователем с этими правами:</p>
             <a href="{% url 'login' %}" class="btn btn-primary">Войти</a>
