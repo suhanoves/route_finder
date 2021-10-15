@@ -1,0 +1,50 @@
+services:
+  database:
+    image: postgres:14.0
+    env_file: ./.env
+    networks:
+      - route_finder
+    volumes:
+      - route_finder_db:/var/lib/postgresql/data/
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $POSTGRES_DB -U $POSTGRES_USER" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: ./app/
+    container_name: route_finder_django
+    env_file: ./.env
+    networks:
+      - route_finder
+    volumes:
+      - route_finder_db:/var/lib/postgresql/data
+      - route_finder_static:/usr/src/app/static/
+    working_dir: /usr/src/app/
+    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: always
+
+  nginx:
+    build: ./nginx
+    container_name: route_finder_nginx
+    networks:
+      - route_finder
+    volumes:
+      - route_finder_static:/usr/src/app/static/
+    ports:
+      - '9876:80'
+    depends_on:
+      - web
+    restart: always
+
+networks:
+  route_finder:
+
+volumes:
+  route_finder_db:
+  route_finder_static:
