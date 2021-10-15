@@ -97,7 +97,7 @@ class Flight(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.number} {self.origin}-{self.destination}"
+        return f"{self.number}"
 
     def get_absolute_url(self):
         return reverse('flights:flight', kwargs={'pk': self.pk})

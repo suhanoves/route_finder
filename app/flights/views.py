@@ -19,8 +19,8 @@ __all__ = (
 
 class FlightsListView(ListView):
     model = Flight
-    queryset = Flight.objects.select_related()
-    paginate_by = 13
+    queryset = Flight.objects.select_related().order_by('number')
+    paginate_by = 10
 
 
 class FlightDetailView(DetailView):
