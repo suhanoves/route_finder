@@ -9,7 +9,7 @@ register = template.Library()
 def is_active_tab(context, *url_pattern_names):
     request: HttpRequest = context.get('request')
 
-    if request.resolver_match:
+    if request and request.resolver_match:
         app_name = request.resolver_match.app_name
         url_pattern_name = request.resolver_match.url_name
 
