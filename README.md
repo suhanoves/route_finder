@@ -17,7 +17,7 @@ Docker Engine 19.03.0+
 
 Docker Compose 1.27.0+
 ```Bash
-git clone git@github.com:suhanoves/route_finder.git
+git clone https://github.com/suhanoves/route_finder.git
 cd route_finder/
 docker-compose up -d
 ```
